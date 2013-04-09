@@ -14,7 +14,7 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
-
+AS8051?=sdas8051
 
 # change location of fx2libdir if needed
 FX2LIBDIR = ../fx2lib
@@ -59,7 +59,7 @@ $(BASENAME).ihx: $(OBJS) $(FX2LIB)
 	$(CC) $(OBJS) $(LIBS) -o $(BASENAME).ihx
 
 dscr.rel: dscr.a51
-	asx8051 -logs dscr.a51
+	$(AS8051) -logs dscr.a51
 
 
 $(BASENAME).bix: $(BASENAME).ihx

@@ -17,9 +17,10 @@
  **/
 
 #include <fx2macros.h>
-#include <usbjt.h>
+#include <fx2ints.h>
 #include <delay.h>
 #include <setupdat.h>
+#include <autovector.h>
 
 #ifdef DEBUG_FIRMWARE 
 #include <serial.h>
@@ -31,10 +32,10 @@
 
 
 
-volatile bit dosud=FALSE;
-volatile bit dohispeed=FALSE;
-volatile bit doreset=FALSE;
-volatile bit dosuspend=FALSE;
+volatile __bit dosud=FALSE;
+volatile __bit dohispeed=FALSE;
+volatile __bit doreset=FALSE;
+volatile __bit dosuspend=FALSE;
 
 // custom functions
 extern void main_loop();
@@ -97,7 +98,7 @@ void main() {
            WAKEUPCS |= bmWU|bmWU2; // make sure ext wakeups are cleared
            SUSPEND=1;
            PCON |= 1;
-           _asm
+           __asm
            nop
            nop
            nop
@@ -105,7 +106,7 @@ void main() {
            nop
            nop
            nop
-           _endasm;
+           __endasm;
         } while ( !remote_wakeup_allowed && REMOTE_WAKEUP()); 
         printf ( "I'm going to wake up.\n");
 
@@ -125,24 +126,24 @@ void main() {
 
 } // end main
 
-void resume_isr() interrupt RESUME_ISR {
+void resume_isr() __interrupt RESUME_ISR {
  CLEAR_RESUME();
 }
   
-void sudav_isr() interrupt SUDAV_ISR {
+void sudav_isr() __interrupt SUDAV_ISR {
  dosud=TRUE;
  CLEAR_SUDAV();
 }
-void usbreset_isr() interrupt USBRESET_ISR {
+void usbreset_isr() __interrupt USBRESET_ISR {
  doreset=TRUE;
  CLEAR_USBRESET();
 }
-void hispeed_isr() interrupt HISPEED_ISR {
+void hispeed_isr() __interrupt HISPEED_ISR {
  dohispeed=TRUE;
  CLEAR_HISPEED();
 }
 
-void suspend_isr() interrupt SUSPEND_ISR {
+void suspend_isr() __interrupt SUSPEND_ISR {
  dosuspend=TRUE;
  CLEAR_SUSPEND();
 }

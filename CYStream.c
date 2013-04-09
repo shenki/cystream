@@ -1,7 +1,7 @@
 #include <fx2regs.h>
 #include <fx2macros.h>
 #include <delay.h>
-#include <usbjt.h>
+#include <autovector.h>
 #include <i2c.h>
 #include <setupdat.h>
 
@@ -32,7 +32,7 @@ enum {
     Full_Alt3_IsocOUT
 };
 
-BYTE xdata Digit[] = { 0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x98, 0x88, 0x83, 0xc6, 0xa1, 0x86, 0x8e };
+BYTE __xdata Digit[] = { 0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x98, 0x88, 0x83, 0xc6, 0xa1, 0x86, 0x8e };
 
 BYTE    Configuration;      // Current configuration
 BYTE    AlternateSetting = Alt0_BulkIN;   // Alternate settings
@@ -597,16 +597,16 @@ BOOL handle_set_interface(BYTE ifc, BYTE alt)       // Called when a Set Interfa
 // USB Interrupt Handlers
 //   The following functions are called by the USB interrupt jump table.
 //-----------------------------------------------------------------------------
-void sof_isr() interrupt SOF_ISR {
+void sof_isr() __interrupt SOF_ISR {
  CLEAR_SOF();
 }
-void sutok_isr() interrupt SUTOK_ISR {}
-void ep0ack_isr() interrupt EP0ACK_ISR {}
-void ep0in_isr() interrupt EP0IN_ISR {}
-void ep0out_isr() interrupt EP0OUT_ISR {}
-void ep1in_isr() interrupt EP1IN_ISR {}
-void ep1out_isr() interrupt EP1OUT_ISR {}
-void ep2_isr() interrupt EP2_ISR {
+void sutok_isr() __interrupt SUTOK_ISR {}
+void ep0ack_isr() __interrupt EP0ACK_ISR {}
+void ep0in_isr() __interrupt EP0IN_ISR {}
+void ep0out_isr() __interrupt EP0OUT_ISR {}
+void ep1in_isr() __interrupt EP1IN_ISR {}
+void ep1out_isr() __interrupt EP1OUT_ISR {}
+void ep2_isr() __interrupt EP2_ISR {
     // Perform USB activity based upon the Alt. Interface selected 
      switch (AlternateSetting)
     {
@@ -630,35 +630,35 @@ void ep2_isr() interrupt EP2_ISR {
    }
 
 }
-void ep4_isr() interrupt EP4_ISR {}
-void ep6_isr() interrupt EP6_ISR {}
-void ep8_isr() interrupt EP8_ISR {}
-void ibn_isr() interrupt IBN_ISR {}
-void ep0ping_isr() interrupt EP0PING_ISR {}
-void ep1ping_isr() interrupt EP1PING_ISR {}
-void ep2ping_isr() interrupt EP2PING_ISR {}
-void ep4ping_isr() interrupt EP4PING_ISR {}
-void ep6ping_isr() interrupt EP6PING_ISR {}
-void ep8ping_isr() interrupt EP8PING_ISR {}
-void errlimit_isr() interrupt ERRLIMIT_ISR {}
-void ep2isoerr_isr() interrupt EP2ISOERR_ISR {}
-void ep4isoerr_isr() interrupt EP4ISOERR_ISR {}
-void ep6isoerr_isr() interrupt EP6ISOERR_ISR {}
-void ep8isoerr_isr() interrupt EP8ISOERR_ISR {}
-void spare_isr() interrupt RESERVED_ISR {}
-void ep2pf_isr() interrupt EP2PF_ISR{}
-void ep4pf_isr() interrupt EP4PF_ISR{}
-void ep6pf_isr() interrupt EP6PF_ISR{}
-void ep8pf_isr() interrupt EP8PF_ISR{}
-void ep2ef_isr() interrupt EP2EF_ISR{}
-void ep4ef_isr() interrupt EP4EF_ISR{}
-void ep6ef_isr() interrupt EP6EF_ISR{}
-void ep8ef_isr() interrupt EP8EF_ISR{}
-void ep2ff_isr() interrupt EP2FF_ISR{}
-void ep4ff_isr() interrupt EP4FF_ISR{}
-void ep6ff_isr() interrupt EP6FF_ISR{}
-void ep8ff_isr() interrupt EP8FF_ISR{}
-void gpifdone_isr() interrupt GPIFDONE_ISR{}
-void gpifwf_isr() interrupt GPIFWF_ISR{}
+void ep4_isr() __interrupt EP4_ISR {}
+void ep6_isr() __interrupt EP6_ISR {}
+void ep8_isr() __interrupt EP8_ISR {}
+void ibn_isr() __interrupt IBN_ISR {}
+void ep0ping_isr() __interrupt EP0PING_ISR {}
+void ep1ping_isr() __interrupt EP1PING_ISR {}
+void ep2ping_isr() __interrupt EP2PING_ISR {}
+void ep4ping_isr() __interrupt EP4PING_ISR {}
+void ep6ping_isr() __interrupt EP6PING_ISR {}
+void ep8ping_isr() __interrupt EP8PING_ISR {}
+void errlimit_isr() __interrupt ERRLIMIT_ISR {}
+void ep2isoerr_isr() __interrupt EP2ISOERR_ISR {}
+void ep4isoerr_isr() __interrupt EP4ISOERR_ISR {}
+void ep6isoerr_isr() __interrupt EP6ISOERR_ISR {}
+void ep8isoerr_isr() __interrupt EP8ISOERR_ISR {}
+void spare_isr() __interrupt RESERVED_ISR {}
+void ep2pf_isr() __interrupt EP2PF_ISR{}
+void ep4pf_isr() __interrupt EP4PF_ISR{}
+void ep6pf_isr() __interrupt EP6PF_ISR{}
+void ep8pf_isr() __interrupt EP8PF_ISR{}
+void ep2ef_isr() __interrupt EP2EF_ISR{}
+void ep4ef_isr() __interrupt EP4EF_ISR{}
+void ep6ef_isr() __interrupt EP6EF_ISR{}
+void ep8ef_isr() __interrupt EP8EF_ISR{}
+void ep2ff_isr() __interrupt EP2FF_ISR{}
+void ep4ff_isr() __interrupt EP4FF_ISR{}
+void ep6ff_isr() __interrupt EP6FF_ISR{}
+void ep8ff_isr() __interrupt EP8FF_ISR{}
+void gpifdone_isr() __interrupt GPIFDONE_ISR{}
+void gpifwf_isr() __interrupt GPIFWF_ISR{}
 
 
