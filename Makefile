@@ -17,7 +17,7 @@
 AS8051?=sdas8051
 
 # change location of fx2libdir if needed
-FX2LIBDIR = ../fx2lib
+FX2LIBDIR = fx2lib
 INCLUDES = -I$(FX2LIBDIR)/include
 FX2LIB = $(FX2LIBDIR)/lib/fx2.lib
 LIBS = fx2.lib -L$(FX2LIBDIR)/lib
@@ -53,7 +53,7 @@ all: $(BASENAME).ihx
 	$(CC) -c $(INCLUDES) $?
 
 $(FX2LIB):
-	make -C $(FX2LIB)/lib/
+	make -C $(FX2LIBDIR)/lib/
 
 $(BASENAME).ihx: $(OBJS) $(FX2LIB)
 	$(CC) $(OBJS) $(LIBS) -o $(BASENAME).ihx
@@ -70,7 +70,7 @@ $(BASENAME).iic: $(BASENAME).ihx
 	$(FX2LIBDIR)/utils/ihx2iic.py -v $(VID) -p $(PID) $(BASENAME).ihx $(BASENAME).iic
 
 clean:
-	rm -f *.{asm,ihx,lnk,lst,map,mem,rel,rst,sym,adb,cdb,bix,iic,hex}
+	$(RM) $(OBJS) $(BASENAME).* *.sym *.asm *.lst *.rel *.rst *.sym
 
 bix: $(BASENAME).bix
 iic: $(BASENAME).iic
