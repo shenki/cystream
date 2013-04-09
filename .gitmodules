@@ -1,0 +1,3 @@
+[submodule "fx2lib"]
+	path = fx2lib
+	url = https://github.com/mulicheng/fx2lib.git
